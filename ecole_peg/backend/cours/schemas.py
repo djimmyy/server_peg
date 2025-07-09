@@ -1,6 +1,6 @@
 from ninja import Schema
 from datetime import date, time
-
+from typing import Optional, List  # Ajout pour compatibilité Python 3.9
 
 # ------------------- COURS -------------------
 class CoursOut(Schema):
@@ -8,19 +8,17 @@ class CoursOut(Schema):
     nom: str
     type_cours: str
     niveau: str
-    heures_par_semaine: int | None = None
-    duree_semaines: int | None = None
+    heures_par_semaine: Optional[int] = None
+    duree_semaines: Optional[int] = None
     tarif: float
-
 
 class CoursIn(Schema):
     nom: str
     type_cours: str
     niveau: str
-    heures_par_semaine: int | None = None
-    duree_semaines: int | None = None
+    heures_par_semaine: Optional[int] = None
+    duree_semaines: Optional[int] = None
     tarif: float
-
 
 # ------------------- ENSEIGNANT -------------------
 class EnseignantOut(Schema):
@@ -28,11 +26,9 @@ class EnseignantOut(Schema):
     nom: str
     prenom: str
 
-
 class EnseignantIn(Schema):
     nom: str
     prenom: str
-
 
 # ------------------- SESSION -------------------
 class SessionIn(Schema):
@@ -44,23 +40,21 @@ class SessionIn(Schema):
     capacite_max: int
     seances_mois: int
 
-
 class SessionOut(Schema):
     id: int
     id_cours: int
-    id_enseignant: int | None = None
-    enseignant__nom: str | None = None
-    enseignant__prenom: str | None = None
+    id_enseignant: Optional[int] = None
+    enseignant__nom: Optional[str] = None
+    enseignant__prenom: Optional[str] = None
     cours__nom: str
     cours__type_cours: str
     cours__niveau: str
     date_debut: date
     date_fin: date
-    periode_journee: str | None = None
+    periode_journee: Optional[str] = None
     statut: str
     capacite_max: int
     seances_mois: int
-
 
 # ------------------- COURS PRIVES -------------------
 class CoursPriveIn(Schema):
@@ -69,9 +63,8 @@ class CoursPriveIn(Schema):
     heure_fin: time
     tarif: float
     lieu: str
-    eleves_ids: list[int]
+    eleves_ids: List[int]
     enseignant: int
-
 
 class CoursPriveOut(Schema):
     id: int
@@ -83,17 +76,15 @@ class CoursPriveOut(Schema):
     enseignant: int
     enseignant__nom: str
     enseignant__prenom: str
-    eleves: list[str] = []
-    eleves_ids: list[int] = []
-
+    eleves: List[str] = []
+    eleves_ids: List[int] = []
 
 # ------------------- INSCRIPTION -------------------
 class InscriptionIn(Schema):
     frais_inscription: float
-    but: str | None = None
-    preinscription: bool | None = None
+    but: Optional[str] = None
+    preinscription: Optional[bool] = None
     id_session: int
-
 
 class InscriptionOut(Schema):
     id: int
@@ -101,37 +92,32 @@ class InscriptionOut(Schema):
     frais_inscription: float
     but: str
     statut: str
-    date_sortie: date | None = None
-    motif_sortie: str | None = None
+    date_sortie: Optional[date] = None
+    motif_sortie: Optional[str] = None
     preinscription: bool
     id_session: int
 
-
 class InscriptionUpdateIn(Schema):
-    frais_inscription: float | None = None
-    but: str | None = None
-    statut: str | None = None
-    date_sortie: date | None = None
-    motif_sortie: str | None = None
-    preinscription: bool | None = None
-    id_session: int | None = None
-
+    frais_inscription: Optional[float] = None
+    but: Optional[str] = None
+    statut: Optional[str] = None
+    date_sortie: Optional[date] = None
+    motif_sortie: Optional[str] = None
+    preinscription: Optional[bool] = None
+    id_session: Optional[int] = None
 
 class FichePresencesIn(Schema):
     mois: str
     annee: int
-
 
 class FichesPresencesOut(Schema):
     id: int
     mois: str
     annee: int
 
-
 class PresenceIn(Schema):
     id: int
     statut: str
-
 
 class PresenceOut(Schema):
     id: int
@@ -139,9 +125,8 @@ class PresenceOut(Schema):
     date_presence: date
     statut: str
 
-
 class FichePresencesOut(Schema):
     id: int
     mois: str
     annee: int
-    presences: list[PresenceOut]
+    presences: List[PresenceOut]

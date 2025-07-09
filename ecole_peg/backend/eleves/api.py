@@ -18,6 +18,7 @@ from django.db.models import (
 from django.db.models.functions import Coalesce, Lower
 from ninja import Router, File, Form
 from ninja.files import UploadedFile
+from typing import Optional, List   # Ajout ici
 
 from .models import (
     Eleve,
@@ -51,9 +52,9 @@ def eleves(
     request,
     page: int = 1,
     taille: int = 10,
-    recherche: str | None = None,
-    date_naissance: str | None = None,
-    statut: str | None = None,
+    recherche: Optional[str] = None,        # Corrigé ici
+    date_naissance: Optional[str] = None,   # Corrigé ici
+    statut: Optional[str] = None,           # Corrigé ici
 ):
     qs = Eleve.objects.select_related("pays").annotate(
         lower_nom=Lower("nom"),
@@ -246,7 +247,7 @@ def supprimer_test_eleve(request, eleve_id: int, test_id: int):
 
 
 # ------------------- DOCUMENTS -------------------
-@router.get("/eleves/{eleve_id}/documents/", response=list[DocumentOut])
+@router.get("/eleves/{eleve_id}/documents/", response=List[DocumentOut])  # Corrigé ici
 def get_documents_eleve(request, eleve_id: int):
     eleve = get_object_or_404(Eleve.objects.prefetch_related("documents"), id=eleve_id)
     documents = eleve.documents.all()
@@ -473,7 +474,7 @@ def statistiques_dashboard(request):
     }
 
 
-@router.get("/anniversaires/", response=list[Anniversaire])
+@router.get("/anniversaires/", response=List[Anniversaire])  # Corrigé ici
 def anniversaires_mois(request):
     aujourdhui = timezone.now().date()
     mois_actuel = aujourdhui.month
