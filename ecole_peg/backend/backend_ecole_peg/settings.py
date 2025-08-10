@@ -99,18 +99,20 @@ WSGI_APPLICATION = "backend_ecole_peg.wsgi.application"
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 import dj_database_url
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mondb',
-        'USER': 'anis',
-        'PASSWORD': 'djemai10',
-        'HOST': 'localhost',
-        'PORT': '5434',  # (ou 5432 si c'est le port par défaut chez toi)
+        'ENGINE': 'django.db.backends.mysql',  # MariaDB = MySQL pour Django
+        'NAME': 'hq2kkg_bdpeg',
+        'USER': 'hq2kkg_anis',
+        'PASSWORD': 'Djem@i2004!',
+        'HOST': 'hq2kkg.myd.infomaniak.com',
+        'PORT': '3306',
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+        },
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
